@@ -1,36 +1,20 @@
 #include "Better_Debugging.hpp"
+#include <exception>
+#include <string>
 
-
-static void Debug_Message(string name, string messages = "")
-{
-    if(DEBUG_MODE)
-    {
-        cout << DEBUG_COLOR << "[" << name << "]";
-
-        if(messages != "")
-            cout << " - " << messages;
-
-        cout << RESET_COLOR << endl;
-    }
-}
+class AssertPPFail : public exception {
+};
 
 static string Debug_Var_Assign(string var, string newValue, string varName, string* adresse)
 {
-    if(DEBUG_MODE)
-    {
-        cout << DEBUG_COLOR << "[Variable Assignation] - Variable Name:" << varName << " Initial value: " << var << ", New Value: " << newValue << ", Adresse: " << adresse << RESET_COLOR << endl;       
-    }
-    
-    var = newValue;
+    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Initial value: " + var + ", New Value: " + newValue);
+
     return var;
 }
 
 static int Debug_Var_Assign(unsigned int  var, unsigned int newValue, string varName, unsigned int* adresse)
 {
-    if(DEBUG_MODE)
-    {
-        cout << DEBUG_COLOR << "[Variable Assignation] - Variable Name:" << varName << " Initial value: " << var << ", New Value: " << newValue << ", Adresse: " << adresse << RESET_COLOR << endl;
-    }
+    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Initial value: " + to_string(var) + ", New Value: " + to_string(newValue));
 
     var = newValue;
     return var;
@@ -38,25 +22,42 @@ static int Debug_Var_Assign(unsigned int  var, unsigned int newValue, string var
 
 static void assertPP(string expected, string given, string message = "")
 {
-    if(expected != given)
+    try
     {
-        cout << ERROR_COLOR << "[Assert Failed] - expected:" << expected << ", got:" << given << ", " << message << RESET_COLOR << endl;
-        throw;
+        if(expected != given)
+        {
+            throw AssertPPFail();
+        }
+    }
+    catch(AssertPPFail af)
+    {
+        Error_Message("Assert Fail", "expected:" + expected + ", got:" + given + ", from:" + message);
+    }
+    catch(exception e)
+    {
+        cout << e.what() << endl;
     }
 
-    if(DEBUG_MODE)
-        cout << DEBUG_COLOR << "[Assert Passed] - " << message << RESET_COLOR << endl;
+    Debug_Message("Assert Passed", message);
 }
 
 static void assertPP(int expected, int given, string message = "")
 {
-    if(expected != given)
+    try
     {
-        cout << ERROR_COLOR << "[Assert Failed] - expected:" << expected << ", got:" << given << ", " << message << RESET_COLOR << endl;
-        throw;
+        if(expected != given)
+        {
+            throw AssertPPFail();
+        }
     }
-    else
+    catch(AssertPPFail af)
     {
-        cout << DEBUG_COLOR << "[Assert Passed] - " << message << RESET_COLOR << endl;
+        Error_Message("Assert Fail", "expected:" + to_string(expected) + ", got:" + to_string(given) + ", from:" + message);
     }
+    catch(exception e)
+    {
+        cout << e.what() << endl;
+    }
+
+    Debug_Message("Assert Passed", message);
 }
