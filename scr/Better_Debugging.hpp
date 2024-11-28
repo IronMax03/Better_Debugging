@@ -73,7 +73,6 @@ static void assertPP(string expected, string given, string message = "");
  */
 static void assertPP(int expected, int given, string message = "");
 
-#define DEBUG_MODE true
 #ifdef DEBUG_MODE
 
 // save logs 

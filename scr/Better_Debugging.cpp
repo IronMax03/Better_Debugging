@@ -3,6 +3,7 @@
 #include <string>
 
 class AssertPPFail : public exception {
+    // to be improved
 };
 
 static string Debug_Var_Assign(string var, string newValue, string varName, string* adresse)
