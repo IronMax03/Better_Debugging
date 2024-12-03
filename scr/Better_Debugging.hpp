@@ -138,7 +138,7 @@ static void assertPP(int expected, int given, string message = "");
  * @param oldVar Variable being assigned.
  * @param newVar New value to assign.
  */
-#define VAR_ASSIGNMENT(oldVar, newVar) oldVar = Debug_Var_Assign(oldVar, newVar, #oldVar, &oldVar)
+#define VAR_ASSIGNMENT(currentVar, newVar) currentVar = Debug_Var_Assign(currentVar, newVar, #currentVar, &currentVar)
 
 /**
  * ASSERT(v, ev) - Checks if `v` satisfies `ev`. Logs the variable name and condition in case of failure.

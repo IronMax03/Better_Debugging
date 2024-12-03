@@ -15,7 +15,7 @@ static string Debug_Var_Assign(string var, string newValue, string varName, stri
 
 static int Debug_Var_Assign(unsigned int  var, unsigned int newValue, string varName, unsigned int* adresse)
 {
-    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Initial value: " + to_string(var) + ", New Value: " + to_string(newValue));
+    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Current value: " + to_string(var) + ", New Value: " + to_string(newValue));
 
     var = newValue;
     return var;
