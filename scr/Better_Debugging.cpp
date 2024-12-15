@@ -1,13 +1,16 @@
 #include "Better_Debugging.hpp"
 #include <exception>
 #include <string>
+#include <sstream>
+
+using namespace std;
 
 // save logs
 #if defined(SAVE_LOGS_ALL_LOGS) && defined(SAVE_ALL_LOGS)
     #error "You cant use SAVE_LOGS and SAVE_ALL_LOGS together."
 #else
     #ifdef SAVE_LOGS
-        # include<fstream>
+        #include <fstream>
         static void Debug_Message(string name, string messages)
         {
             ofstream logsTxt;
@@ -27,7 +30,7 @@
         }
 
     #elif defined(SAVE_ALL_LOGS)
-        #include<fstream>
+        #include <fstream>
         #define COMPILATION_DATE __DATE__
         #define COMPILATION_TIME __TIME__
 
@@ -77,7 +80,9 @@ class testcaseFailed : public exception
         _message = msg;
    }
 
-    const char* what()
+    ~testcaseFailed() _NOEXCEPT {} // Explicitly mark as noexcept
+
+    const char* what() const _NOEXCEPT 
     {
         return _message.c_str();
     } 
@@ -85,17 +90,28 @@ class testcaseFailed : public exception
 
 static string Debug_Var_Assign(string var, string newValue, string varName, string* adresse)
 {
-    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Initial value: " + var + ", New Value: " + newValue);
+    ostringstream messageStream;
+    messageStream   << "Variable Name:" << varName 
+                    << " Current value: " << var  
+                    << ", New Value: " << newValue 
+                    << ", var address: " << &adresse;
 
-    return var;
+    Debug_Message("Variable Assignation", messageStream.str());
+
+    return newValue;
 }
 
-static int Debug_Var_Assign(unsigned int  var, unsigned int newValue, string varName, unsigned int* adresse)
+static int Debug_Var_Assign(int  var, int newValue, string varName, int* adresse)
 {
-    Debug_Message("Variable Assignation", "Variable Name:" + varName + " Current value: " + to_string(var) + ", New Value: " + to_string(newValue));
+    ostringstream messageStream;
+    messageStream   << "Variable Name:" << varName 
+                    << " Current value: " << to_string(var)  
+                    << ", New Value: " << to_string(newValue) 
+                    << ", var address: " << &adresse;
 
-    var = newValue;
-    return var;
+    Debug_Message("Variable Assignation", messageStream.str());
+
+    return newValue;
 }
 
 static void assertPP(string expected, string given, string message )
@@ -121,6 +137,7 @@ static void assertPP(string expected, string given, string message )
     catch(...)
     {
         Error_Message("exception in assert","an unknown exception occured inside ASSERT");
+        throw;
     }
 }
 
@@ -147,5 +164,6 @@ static void assertPP(int expected, int given, string message )
     catch(...)
     {
         Error_Message("exception in assert","an unknown exception occured inside ASSERT");
+        throw;
     }
 }
