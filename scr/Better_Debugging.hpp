@@ -6,7 +6,13 @@
 
 // colors
 #ifndef ERROR_COLOR
-    #define ERROR_COLOR  "\033[31m"
+    #define ERROR_COLOR  "\033[31m\a"
+#endif
+#ifndef TEST_CASE_FAILED
+    #define TEST_CASE_FAILED  "\033[31m"
+#endif
+#ifndef TEST_CASE_PASSED
+    #define TEST_CASE_PASSED  "\033[32m"
 #endif
 #ifndef DEBUG_COLOR
     #define DEBUG_COLOR  "\033[33m"
@@ -66,7 +72,7 @@ static int Debug_Var_Assign(int  var, int newValue, std::string varName, int* ad
  * @param given     The actual std::string value.
  * @param message   An optional message.
  */
-static void assertPP(std::string expected, std::string given, std::string message);
+static void testCasePP(std::string expected, std::string given, std::string message);
 
 /**
  * If values don't match, logs an error and throws an exception. Logs success if equal (in `DEBUG_MODE`).
@@ -75,7 +81,7 @@ static void assertPP(std::string expected, std::string given, std::string messag
  * @param given     The actual std::string value.
  * @param message   An optional message.
  */
-static void assertPP(int expected, int given, std::string message);
+static void testCasePP(int expected, int given, std::string message);
 
 #ifdef DEBUG_MODE
  
@@ -87,17 +93,27 @@ static void assertPP(int expected, int given, std::string message);
     #define VAR_ASSIGNMENT(currentVar, newVar) ((currentVar) = Debug_Var_Assign((currentVar), (newVar), (#currentVar), (&currentVar)))
 
     /**
-    * ASSERT(v, ev) - Checks if `v` satisfies `ev`. Logs the variable name and condition in case of failure.
+    * TEST_CASE(v, ev) - Checks if `v` satisfies `ev`. Logs the variable name and condition in case of failure.
     * @param v  Variable to assert.
     * @param ev Expected value or condition.
     */
-    #define ASSERT(v, ev) assertPP(v, ev, #v)
+    #define TEST_CASE(v, ev) testCasePP(v, ev, #v)
+
+    /**
+    * @brief Logs a debug message with a label for context.
+    *
+    * Outputs a formatted debug message to the console and/or a log file.
+    * When `DEBUG_MODE` is disabled, this function is excluded from compilation.
+    *
+    * @param name Label or context for the log (e.g., function/module name).
+    * @param message The content of the debug message.
+    */
     #define DEBUG_LOG(name, message) Debug_Message(name, message)
 
 #else // Non-debug mode
 
     #define VAR_ASSIGNMENT(currentVar, newVar) currentVar = newVar  // Direct assignment without debugging.
-    #define ASSERT(v, ev)  // Empty, no assertions in non-debug mode.
+    #define TEST_CASE(v, ev)  // Empty, no assertions in non-debug mode.
     #define DEBUG_LOG(name, message)
 
 #endif

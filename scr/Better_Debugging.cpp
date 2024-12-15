@@ -3,29 +3,28 @@
 #include <string>
 #include <sstream>
 
-using namespace std;
-
 // save logs
 #if defined(SAVE_LOGS_ALL_LOGS) && defined(SAVE_ALL_LOGS)
     #error "You cant use SAVE_LOGS and SAVE_ALL_LOGS together."
 #else
     #ifdef SAVE_LOGS
+    
         #include <fstream>
-        static void Debug_Message(string name, string messages)
+        static void Debug_Message(std::string name, std::string messages)
         {
             ofstream logsTxt;
-            cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;    
+            std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
             logsTxt.open("logs.txt"); 
-            logsTxt << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;
+            logsTxt << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;
             logsTxt.close();
         }
 
-        static void Error_Message(string name, string messages)
+        static void Error_Message(std::string name, std::string messages)
         {
             ofstream logsTxt;
-            cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;    
+            std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
             logsTxt.open("logs.txt"); 
-            logsTxt << "/!\\[" << name << "] - " << messages << endl;
+            logsTxt << "/!\\[" << name << "] - " << messages << std::endl;
             logsTxt.close();
         }
 
@@ -34,53 +33,55 @@ using namespace std;
         #define COMPILATION_DATE __DATE__
         #define COMPILATION_TIME __TIME__
 
-        static void Debug_Message(string name, string messages)
+        static void Debug_Message(std::string name,std::string messages)
         {
             ofstream logsTxt;
-            cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;  
-            string date = COMPILATION_TIME;
-            string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
+            std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
+           std::string date = COMPILATION_TIME;
+           std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
             logsTxt.open(fileName); 
-            logsTxt << "[" << name << "] - " << messages << endl;
+            logsTxt << "[" << name << "] - " << messages << std::endl;
             logsTxt.close();        
         }
             
-        static void Error_Message(string name, string messages)
+        static void Error_Message(std::string name,std::string messages)
         {
             ofstream logsTxt;
-            cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl; 
-            string date = COMPILATION_TIME;
-            string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt"; 
+            std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl; 
+           std::string date = COMPILATION_TIME;
+           std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt"; 
             logsTxt.open(fileName); 
-            logsTxt << "/!\\[" << name << "] - " << messages << endl;
+            logsTxt << "/!\\[" << name << "] - " << messages << std::endl;
             logsTxt.close();
         }
+
     #else
-        static void Debug_Message(string name, string messages)
+
+        static void Debug_Message(std::string name,std::string messages)
         {
-            cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;       
+            std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;       
         }
 
-        static void Error_Message(string name, string messages)
+        static void Error_Message(std::string name,std::string messages)
         {
-            cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << endl;    
+            std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
         }
     #endif
 #endif
 
-class testcaseFailed : public exception 
+class testCaseFailed : public  std::exception 
 {
     // to be improved
     private:
-        string _message;
+       std::string _message;
 
    public:
-   explicit testcaseFailed(const string& msg = "Assertion failed") 
+   explicit testCaseFailed(const std::string& msg = "Assertion failed") 
    {
         _message = msg;
    }
 
-    ~testcaseFailed() _NOEXCEPT {} // Explicitly mark as noexcept
+    ~testCaseFailed() _NOEXCEPT {} // Explicitly mark as noexcept
 
     const char* what() const _NOEXCEPT 
     {
@@ -88,9 +89,9 @@ class testcaseFailed : public exception
     } 
 };
 
-static string Debug_Var_Assign(string var, string newValue, string varName, string* adresse)
+static std::string Debug_Var_Assign(std::string var,std::string newValue,std::string varName,std::string* adresse)
 {
-    ostringstream messageStream;
+    std::ostringstream messageStream;
     messageStream   << "Variable Name:" << varName 
                     << " Current value: " << var  
                     << ", New Value: " << newValue 
@@ -101,12 +102,12 @@ static string Debug_Var_Assign(string var, string newValue, string varName, stri
     return newValue;
 }
 
-static int Debug_Var_Assign(int  var, int newValue, string varName, int* adresse)
+static int Debug_Var_Assign(int  var, int newValue,std::string varName, int* adresse)
 {
-    ostringstream messageStream;
+    std::ostringstream messageStream;
     messageStream   << "Variable Name:" << varName 
-                    << " Current value: " << to_string(var)  
-                    << ", New Value: " << to_string(newValue) 
+                    << " Current value: " << std::to_string(var)  
+                    << ", New Value: " << std::to_string(newValue) 
                     << ", var address: " << &adresse;
 
     Debug_Message("Variable Assignation", messageStream.str());
@@ -114,56 +115,56 @@ static int Debug_Var_Assign(int  var, int newValue, string varName, int* adresse
     return newValue;
 }
 
-static void assertPP(string expected, string given, string message )
+static void testCasePP(std::string expected, std::string given,std::string message )
 {
     try
     {
         if(expected != given)
         {
-            throw testcaseFailed("expected:" + expected + ", got:" + given + ", from:" + message);
+            throw testCaseFailed("expected:" + expected + ", got:" + given + ", from:" + message);
         }
-        Debug_Message("Assert Passed", message);
+        Debug_Message("Test Case Passed", message);
     }
-    catch(testcaseFailed& af)
+    catch(testCaseFailed& af)
     {
-        Error_Message("Assert Fail", af.what());
+        Error_Message("Test Case Fail", af.what());
         throw af;
     }
-    catch(exception& e)
+    catch(std::exception& e)
     {
-        Error_Message("error in assert", e.what());
+        Error_Message("Test Case Error", e.what());
         throw e;
     }
     catch(...)
     {
-        Error_Message("exception in assert","an unknown exception occured inside ASSERT");
+        Error_Message("Test Case Error", "an unknown exception occured inside the test case.");
         throw;
     }
 }
 
-static void assertPP(int expected, int given, string message )
+static void testCasePP(int expected, int given,std::string message )
 {
     try
     {
         if(expected != given)
         {
-            throw testcaseFailed("expected:" + to_string(expected) + ", got:" + to_string(given) + ", from:" + message);
+            throw testCaseFailed("expected:" + std::to_string(expected) + ", got:" + std::to_string(given) + ", from:" + message);
         }
-        Debug_Message("Assert Passed", message);
+        Debug_Message("Test Case Passed", message);
     }
-    catch(testcaseFailed& af)
+    catch(testCaseFailed& af)
     {
-        Error_Message("Assert Fail", af.what());
+        Error_Message("Test Case Fail", af.what());
         throw af;
     }
-    catch(exception& e)
+    catch(std::exception& e)
     {
-        Error_Message("error in assert", e.what());
+        Error_Message("Test Case Error", e.what());
         throw e;
     }
     catch(...)
     {
-        Error_Message("exception in assert","an unknown exception occured inside ASSERT");
+        Error_Message("Test Case Error", "an unknown exception occured inside the test case.");
         throw;
     }
 }
