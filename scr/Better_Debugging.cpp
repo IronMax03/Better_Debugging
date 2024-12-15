@@ -1,5 +1,5 @@
 #include "Better_Debugging.hpp"
-#include <exception>
+#include "customExceptions.hpp"
 #include <string>
 #include <sstream>
 
@@ -8,7 +8,7 @@
     #error "You cant use SAVE_LOGS and SAVE_ALL_LOGS together."
 #else
     #ifdef SAVE_LOGS
-    
+
         #include <fstream>
         static void Debug_Message(std::string name, std::string messages)
         {
@@ -68,26 +68,6 @@
         }
     #endif
 #endif
-
-class testCaseFailed : public  std::exception 
-{
-    // to be improved
-    private:
-       std::string _message;
-
-   public:
-   explicit testCaseFailed(const std::string& msg = "Assertion failed") 
-   {
-        _message = msg;
-   }
-
-    ~testCaseFailed() _NOEXCEPT {} // Explicitly mark as noexcept
-
-    const char* what() const _NOEXCEPT 
-    {
-        return _message.c_str();
-    } 
-};
 
 static std::string Debug_Var_Assign(std::string var,std::string newValue,std::string varName,std::string* adresse)
 {
