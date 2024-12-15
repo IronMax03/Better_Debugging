@@ -10,9 +10,13 @@ Have you ever had a test case fail and struggled to understand the issue? Better
 
 ## How to use it
 
-1. Include `Better_Debugging.hpp` in your project.
+1. Download the project.
 
-2. Enable debugging mode by adding `#define DEBUG_MODE` before the include statement. This activates the debugging functionality. If omitted, the library will gracefully deactivate debugging without affecting your code.
+2. From .../Better_Debugging/scr and execute `g++ g++ -c Better_Debugging.cpp  -o Better_Debugging.o `(this project also should work using **clang++** but keep in mind it is tested whith **GCC**).
+
+2.  Include `Better_Debugging.hpp` in your project.
+
+3. Enable debugging mode by adding `#define DEBUG_MODE` before the include statement. This activates the debugging functionality. If omitted, the library will gracefully deactivate debugging without affecting your code.
 
 
 ### For example:

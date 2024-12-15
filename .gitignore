@@ -1,0 +1,10 @@
+# file types
+*.txt
+*.o
+
+# specific fils
+Runner.cpp
+Runner
+a.out
+.DS_Store
+test.hpp
