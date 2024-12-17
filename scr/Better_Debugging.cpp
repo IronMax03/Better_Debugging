@@ -11,7 +11,7 @@
 
         #include <fstream>
 
-        static void Debug_Message(std::string name, std::string messages)
+        static void debugMessage(std::string name, std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
@@ -20,7 +20,7 @@
             logsTxt.close();
         }
 
-        static void Success_Message(std::string name,std::string messages)
+        static void successMessage(std::string name,std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
@@ -29,7 +29,7 @@
             logsTxt.close();
         }
 
-        static void Error_Message(std::string name, std::string messages)
+        static void errorMessage(std::string name, std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
@@ -45,7 +45,7 @@
         #define COMPILATION_DATE __DATE__
         #define COMPILATION_TIME __TIME__
 
-        static void Debug_Message(std::string name,std::string messages)
+        static void debugMessage(std::string name,std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
@@ -56,7 +56,7 @@
             logsTxt.close();        
         }
 
-        static void Success_Message(std::string name,std::string messages)
+        static void successMessage(std::string name,std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
@@ -67,7 +67,7 @@
             logsTxt.close();        
         }
             
-        static void Error_Message(std::string name,std::string messages)
+        static void errorMessage(std::string name,std::string messages)
         {
             std::ofstream logsTxt;
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl; 
@@ -80,24 +80,24 @@
 
     #else
 
-        static void Success_Message(std::string name, std::string messages)
+        static void successMessage(std::string name, std::string messages)
         {
             std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;       
         }
 
-        static void Debug_Message(std::string name,std::string messages)
+        static void debugMessage(std::string name,std::string messages)
         {
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;       
         }
 
-        static void Error_Message(std::string name,std::string messages)
+        static void errorMessage(std::string name,std::string messages)
         {
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
         }
     #endif
 #endif
 
-static std::string Debug_Var_Assign(std::string var,std::string newValue,std::string varName,std::string* adresse)
+static std::string debugVarAssign(std::string var,std::string newValue,std::string varName,std::string* adresse)
 {
     std::ostringstream messageStream;
     messageStream   << "Variable Name:" << varName 
@@ -105,12 +105,12 @@ static std::string Debug_Var_Assign(std::string var,std::string newValue,std::st
                     << ", New Value: " << newValue 
                     << ", var address: " << adresse;
 
-    Debug_Message("Variable Assignation", messageStream.str());
+    debugMessage("Variable Assignation", messageStream.str());
 
     return newValue;
 }
 
-static int Debug_Var_Assign(int  var, int newValue,std::string varName, int* adresse)
+static int debugVarAssign(int  var, int newValue,std::string varName, int* adresse)
 {
     std::ostringstream messageStream;
     messageStream   << "Variable Name:" << varName 
@@ -118,7 +118,7 @@ static int Debug_Var_Assign(int  var, int newValue,std::string varName, int* adr
                     << ", New Value: " << std::to_string(newValue) 
                     << ", var address: " << adresse;
 
-    Debug_Message("Variable Assignation", messageStream.str());
+    debugMessage("Variable Assignation", messageStream.str());
 
     return newValue;
 }
@@ -131,21 +131,21 @@ static void testCasePP(std::string expected, std::string given,std::string messa
         {
             throw testCaseFailed("expected:" + expected + ", got:" + given + ", from:" + message);
         }
-        Success_Message("Test Case Passed", message);
+        successMessage("Test Case Passed", message);
     }
     catch(testCaseFailed& af)
     {
-        Error_Message("Test Case Fail", af.what());
+        errorMessage("Test Case Fail", af.what());
         throw af;
     }
     catch(std::exception& e)
     {
-        Error_Message("Test Case Error", e.what());
+        errorMessage("Test Case Error", e.what());
         throw e;
     }
     catch(...)
     {
-        Error_Message("Test Case Error", "an unknown exception occured inside the test case.");
+        errorMessage("Test Case Error", "an unknown exception occured inside the test case.");
         throw;
     }
 }
@@ -158,21 +158,21 @@ static void testCasePP(int expected, int given,std::string message )
         {
             throw testCaseFailed("expected:" + std::to_string(expected) + ", got:" + std::to_string(given) + ", from:" + message);
         }
-        Success_Message("Test Case Passed", message);
+        successMessage("Test Case Passed", message);
     }
     catch(testCaseFailed& af)
     {
-        Error_Message("Test Case Fail", af.what());
+        errorMessage("Test Case Fail", af.what());
         throw af;
     }
     catch(std::exception& e)
     {
-        Error_Message("Test Case Error", e.what());
+        errorMessage("Test Case Error", e.what());
         throw e;
     }
     catch(...)
     {
-        Error_Message("Test Case Error", "an unknown exception occured inside the test case.");
+        errorMessage("Test Case Error", "an unknown exception occured inside the test case.");
         throw;
     }
 }

@@ -28,7 +28,7 @@
  * @param name      The label for the message (e.g., "Initialization").
  * @param messages  The message content (optional).
  */
-static void Success_Message(std::string name, std::string messages);
+static void successMessage(std::string name, std::string messages);
 
 /**
  * Logs a message with a given label and optional content, regardless of `DEBUG_MODE`.
@@ -37,7 +37,7 @@ static void Success_Message(std::string name, std::string messages);
  * @param name      The label for the message (e.g., "Initialization").
  * @param messages  The message content (optional).
  */
-static void Debug_Message(std::string name, std::string messages);
+static void debugMessage(std::string name, std::string messages);
 
 /**
  * Logs a error with a given label and optional content, regardless of `DEBUG_MODE`.
@@ -59,7 +59,7 @@ static void Error_Message(std::string name, std::string messages);
  * 
  * @return           The new value assigned to the variable.
  */
-static std::string Debug_Var_Assign(std::string var, std::string newValue, std::string varName, std::string* adresse);
+static std::string debugVarAssign(std::string var, std::string newValue, std::string varName, std::string* adresse);
 
 /**
  * Logs the variable's name, old value, new value, and address. Returns the new value.
@@ -72,7 +72,7 @@ static std::string Debug_Var_Assign(std::string var, std::string newValue, std::
  * 
  * @return           The new value assigned to the variable.
  */
-static int Debug_Var_Assign(int  var, int newValue, std::string varName, int* adresse);
+static int debugVarAssign(int  var, int newValue, std::string varName, int* adresse);
 
 /**
  * If values don't match, logs an error and throws an exception. Logs success if equal (in `DEBUG_MODE`).
@@ -103,7 +103,7 @@ static void testCasePP(int expected, int given, std::string message);
     * @param oldVar Variable being assigned.
     * @param newVar New value to assign.
     */
-    #define VAR_ASSIGNMENT(currentVar, newVar) ((currentVar) = Debug_Var_Assign((currentVar), (newVar), (#currentVar), (&currentVar)))
+    #define VAR_ASSIGNMENT(currentVar, newVar) ((currentVar) = debugVarAssign((currentVar), (newVar), (#currentVar), (&currentVar)))
 
     /**
     * TEST_CASE(v, ev) - Checks if `v` satisfies `ev`. Logs the variable name and condition in case of failure.
@@ -121,7 +121,7 @@ static void testCasePP(int expected, int given, std::string message);
     * @param name Label or context for the log (e.g., function/module name).
     * @param message The content of the debug message.
     */
-    #define LOG(name, message) Debug_Message(name, message)
+    #define LOG(name, message) debugMessage(name, message)
 
 #else // Non-debug mode
 
