@@ -15,7 +15,7 @@
         {
             std::ofstream logsTxt;
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
-            logsTxt.open("logs.txt"); 
+            logsTxt.open("logs.txt", std::ios::app); 
             logsTxt << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;
             logsTxt.close();
         }
@@ -24,7 +24,7 @@
         {
             std::ofstream logsTxt;
             std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
-            logsTxt.open("logs.txt"); 
+            logsTxt.open("logs.txt", std::ios::app); 
             logsTxt << DEBUG_COLOR << "√ - [" << name << "] - " << messages << RESET_COLOR << std::endl;
             logsTxt.close();
         }
@@ -33,7 +33,7 @@
         {
             std::ofstream logsTxt;
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
-            logsTxt.open("logs.txt"); 
+            logsTxt.open("logs.txt", std::ios::app); 
             logsTxt << "/!\\ - [" << name << "] - " << messages << std::endl;
             logsTxt.close();
         }
@@ -51,7 +51,7 @@
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
             std::string date = COMPILATION_TIME;
             std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
-            logsTxt.open(fileName); 
+            logsTxt.open(fileName, std::ios::app); 
             logsTxt << "[" << name << "] - " << messages << std::endl;
             logsTxt.close();        
         }
@@ -62,7 +62,7 @@
             std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
             std::string date = COMPILATION_TIME;
             std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
-            logsTxt.open(fileName); 
+            logsTxt.open(fileName, std::ios::app); 
             logsTxt << "√ - [" << name << "] - " << messages << std::endl;
             logsTxt.close();        
         }
@@ -73,7 +73,7 @@
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl; 
             std::string date = COMPILATION_TIME;
             std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt"; 
-            logsTxt.open(fileName); 
+            logsTxt.open(fileName, std::ios::app); 
             logsTxt << "/!\\ - [" << name << "] - " << messages << std::endl;
             logsTxt.close();
         }
@@ -103,7 +103,7 @@ static std::string Debug_Var_Assign(std::string var,std::string newValue,std::st
     messageStream   << "Variable Name:" << varName 
                     << " Current value: " << var  
                     << ", New Value: " << newValue 
-                    << ", var address: " << &adresse;
+                    << ", var address: " << adresse;
 
     Debug_Message("Variable Assignation", messageStream.str());
 
@@ -116,7 +116,7 @@ static int Debug_Var_Assign(int  var, int newValue,std::string varName, int* adr
     messageStream   << "Variable Name:" << varName 
                     << " Current value: " << std::to_string(var)  
                     << ", New Value: " << std::to_string(newValue) 
-                    << ", var address: " << &adresse;
+                    << ", var address: " << adresse;
 
     Debug_Message("Variable Assignation", messageStream.str());
 
