@@ -8,19 +8,60 @@ To find a complete documentation of the features click [here](Doc/Documentation.
 - Easy Variable Assignment Logging: Track variable changes with detailed logs.
 - Powerful Test Cases: Validate conditions with custom messages.
 
+
+
+
+
+
+
+
 ## How to use it
 
-1. Download the project.
+1. **Download the Project**  
+   Clone or download the **Better_Debugging** project to your local machine.
 
-2. From .../Better_Debugging/scr and execute: 
-```console
-g++ -c Better_Debugging.cpp -o Better_Debugging.o
-```
-(this project should also work using **clang++** but keep in mind it is tested whith **GCC**).
+2. **Compile the Library**  
+   Navigate to the `src` directory:
+   ```bash
+   g++ -c Better_Debugging.cpp -o Better_Debugging.o
+- This command compiles the library into an object file (Better_Debugging.o)
+- **Note:** The project is tested with GCC but should also work with **clang++**.
 
+3. **Include the Object File in Your Project**  
+   Add the Better_Debugging.o file to your repository or build system.
+
+4. **Include the Header File**  
+   In your source file(s), include the library header:
+   ```cpp
+   #include "Better_Debugging.cpp"
+   ```
+
+5. **Enable Debugging Mode**
+    You can activate debugging functionality in one of two ways:
+    - **Using the Compiler Flag:** <br>
+    Pass `-DEBUG_MODE` when compiling your project:
+    ```bash
+    g++ -DEBUG_MODE main.cpp
+    ```
+    - **Using a Preprocessor Directive:**
+
+6. **Run Your Program** <br>
+    Execute the compiled program, and debugging logs or assertions will be printed as expected.
+
+## How to use it
 2.  Include `Better_Debugging.o` in your repository.
 
-3. Enable debugging mode by adding `#define DEBUG_MODE` before the include statement. This activates the debugging functionality. If omitted, the library will gracefully deactivate debugging without affecting your code.
+3. Add `#include "Better_Debugging.cpp"` to the header.
+
+4. Enable debugging mode by using the flag `-DEBUG_MODE` when compiling your project. This activates the debugging functionality. If omitted, the library will gracefully deactivate debugging without affecting your code. An alternative methode to activates **DEBUG_MODE** is by adding `#define DEBUG_MODE` before `#include "Better_Debugging.cpp"`.
+
+
+
+
+
+
+
+
 
 
 ### For example:
@@ -58,7 +99,7 @@ If you  have any idea that could fit in this project We are also open to discuss
 Follow clean and consistent coding practices. Use meaningful variable and function names.
 
 - **Document Your Code:**
-Ensure all functions have clear and concise comments.
+Ensure all functions have clear and concise comments/description.
 
 - **Test Your Changes:**
 While we understand that fully testing this library may be challenging, ensure your code works as intended before submitting. Focus on edge cases and confirm that your changes integrate smoothly with existing functionality.
