@@ -1,5 +1,4 @@
 #include <exception>
-#include <string>
 
 /**
  * @class testCaseFailed
@@ -10,7 +9,7 @@
  * debugging and testing scenarios, allowing developers to identify and handle 
  * assertion failures in a structured manner.
  */
-class testCaseFailed : public  std::exception 
+class testCaseFailed : private  std::exception 
 {
     private:
        std::string _message;

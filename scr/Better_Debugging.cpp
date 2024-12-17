@@ -1,61 +1,89 @@
 #include "Better_Debugging.hpp"
 #include "customExceptions.hpp"
-#include <string>
 #include <sstream>
+#include <string>
 
 // save logs
-#if defined(SAVE_LOGS_ALL_LOGS) && defined(SAVE_ALL_LOGS)
-    #error "You cant use SAVE_LOGS and SAVE_ALL_LOGS together."
+#if defined(DONT_SAVE_LOGS) && defined(CREATE_NEW_LOGS_FILE)
+    #error "You cant use DONT_SAVE_LOGS and CREATE_NEW_LOGS_FILE together."
 #else
-    #ifdef SAVE_LOGS
+    #ifndef DONT_SAVE_LOGS
 
         #include <fstream>
+
         static void Debug_Message(std::string name, std::string messages)
         {
-            ofstream logsTxt;
+            std::ofstream logsTxt;
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
             logsTxt.open("logs.txt"); 
             logsTxt << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;
             logsTxt.close();
         }
 
-        static void Error_Message(std::string name, std::string messages)
+        static void Success_Message(std::string name,std::string messages)
         {
-            ofstream logsTxt;
-            std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
+            std::ofstream logsTxt;
+            std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
             logsTxt.open("logs.txt"); 
-            logsTxt << "/!\\[" << name << "] - " << messages << std::endl;
+            logsTxt << DEBUG_COLOR << "√ - [" << name << "] - " << messages << RESET_COLOR << std::endl;
             logsTxt.close();
         }
 
-    #elif defined(SAVE_ALL_LOGS)
+        static void Error_Message(std::string name, std::string messages)
+        {
+            std::ofstream logsTxt;
+            std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;    
+            logsTxt.open("logs.txt"); 
+            logsTxt << "/!\\ - [" << name << "] - " << messages << std::endl;
+            logsTxt.close();
+        }
+
+    #elif defined(CREATE_NEW_LOGS_FILE)
+
         #include <fstream>
+
         #define COMPILATION_DATE __DATE__
         #define COMPILATION_TIME __TIME__
 
         static void Debug_Message(std::string name,std::string messages)
         {
-            ofstream logsTxt;
+            std::ofstream logsTxt;
             std::cout << DEBUG_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
-           std::string date = COMPILATION_TIME;
-           std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
+            std::string date = COMPILATION_TIME;
+            std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
             logsTxt.open(fileName); 
             logsTxt << "[" << name << "] - " << messages << std::endl;
+            logsTxt.close();        
+        }
+
+        static void Success_Message(std::string name,std::string messages)
+        {
+            std::ofstream logsTxt;
+            std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;  
+            std::string date = COMPILATION_TIME;
+            std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt";
+            logsTxt.open(fileName); 
+            logsTxt << "√ - [" << name << "] - " << messages << std::endl;
             logsTxt.close();        
         }
             
         static void Error_Message(std::string name,std::string messages)
         {
-            ofstream logsTxt;
+            std::ofstream logsTxt;
             std::cout << ERROR_COLOR << "[" << name << "] - " << messages << RESET_COLOR << std::endl; 
-           std::string date = COMPILATION_TIME;
-           std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt"; 
+            std::string date = COMPILATION_TIME;
+            std::string fileName = "logs-" + date + "-" + COMPILATION_TIME + ".txt"; 
             logsTxt.open(fileName); 
-            logsTxt << "/!\\[" << name << "] - " << messages << std::endl;
+            logsTxt << "/!\\ - [" << name << "] - " << messages << std::endl;
             logsTxt.close();
         }
 
     #else
+
+        static void Success_Message(std::string name, std::string messages)
+        {
+            std::cout << TEST_CASE_PASSED << "[" << name << "] - " << messages << RESET_COLOR << std::endl;       
+        }
 
         static void Debug_Message(std::string name,std::string messages)
         {
@@ -103,7 +131,7 @@ static void testCasePP(std::string expected, std::string given,std::string messa
         {
             throw testCaseFailed("expected:" + expected + ", got:" + given + ", from:" + message);
         }
-        Debug_Message("Test Case Passed", message);
+        Success_Message("Test Case Passed", message);
     }
     catch(testCaseFailed& af)
     {
@@ -130,7 +158,7 @@ static void testCasePP(int expected, int given,std::string message )
         {
             throw testCaseFailed("expected:" + std::to_string(expected) + ", got:" + std::to_string(given) + ", from:" + message);
         }
-        Debug_Message("Test Case Passed", message);
+        Success_Message("Test Case Passed", message);
     }
     catch(testCaseFailed& af)
     {

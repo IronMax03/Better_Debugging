@@ -28,6 +28,15 @@
  * @param name      The label for the message (e.g., "Initialization").
  * @param messages  The message content (optional).
  */
+static void Success_Message(std::string name, std::string messages);
+
+/**
+ * Logs a message with a given label and optional content, regardless of `DEBUG_MODE`.
+ * This method is not intended to be directly used.
+ * 
+ * @param name      The label for the message (e.g., "Initialization").
+ * @param messages  The message content (optional).
+ */
 static void Debug_Message(std::string name, std::string messages);
 
 /**
@@ -83,6 +92,10 @@ static void testCasePP(std::string expected, std::string given, std::string mess
  */
 static void testCasePP(int expected, int given, std::string message);
 
+#ifdef EBUG_MODE
+    #define DEBUG_MODE
+#endif
+
 #ifdef DEBUG_MODE
  
     /**
@@ -108,13 +121,13 @@ static void testCasePP(int expected, int given, std::string message);
     * @param name Label or context for the log (e.g., function/module name).
     * @param message The content of the debug message.
     */
-    #define DEBUG_LOG(name, message) Debug_Message(name, message)
+    #define LOG(name, message) Debug_Message(name, message)
 
 #else // Non-debug mode
 
     #define VAR_ASSIGNMENT(currentVar, newVar) currentVar = newVar  // Direct assignment without debugging.
     #define TEST_CASE(v, ev)  // Empty, no assertions in non-debug mode.
-    #define DEBUG_LOG(name, message)
+    #define LOG(name, message)
 
 #endif
 #endif // #ifndef BETTER_DEBUGGING
