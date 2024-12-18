@@ -9,12 +9,6 @@ To find a complete documentation of the features click [here](Doc/Documentation.
 - Powerful Test Cases: Validate conditions with custom messages.
 
 
-
-
-
-
-
-
 ## How to use it
 
 1. **Download the Project**  
@@ -25,7 +19,7 @@ To find a complete documentation of the features click [here](Doc/Documentation.
    ```bash
    g++ -c Better_Debugging.cpp -o Better_Debugging.o
 - This command compiles the library into an object file (Better_Debugging.o)
-- **Note:** The project is tested with GCC but should also work with **clang++**.
+- **Note:** The project is tested with **GCC** but should also work with **clang++**.
 
 3. **Include the Object File in Your Project**  
    Add the Better_Debugging.o file to your repository or build system.
@@ -47,21 +41,6 @@ To find a complete documentation of the features click [here](Doc/Documentation.
 
 6. **Run Your Program** <br>
     Execute the compiled program, and debugging logs or assertions will be printed as expected.
-
-## How to use it
-2.  Include `Better_Debugging.o` in your repository.
-
-3. Add `#include "Better_Debugging.cpp"` to the header.
-
-4. Enable debugging mode by using the flag `-DEBUG_MODE` when compiling your project. This activates the debugging functionality. If omitted, the library will gracefully deactivate debugging without affecting your code. An alternative methode to activates **DEBUG_MODE** is by adding `#define DEBUG_MODE` before `#include "Better_Debugging.cpp"`.
-
-
-
-
-
-
-
-
 
 
 ### For example:

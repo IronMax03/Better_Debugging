@@ -10,11 +10,11 @@ This document outlines the functionalities provided by the Better_Debugging libr
 2. [VAR_ASSIGNMENT](#var_assignment)
    - [Usage](#usage-1)
    - [Example](#example-1)
-3. [DEBUG_LOG](#debug_log)
+3. [LOG](#log)
 4. [Hidden Functions](#hidden-functions)
-   - [Debug_Var_Assign](#debug_var_assign)
+   - [debugVarAssign](#debugVarAssign)
    - [testCasePP](#testcasepp)
-   - [Debug_Message & Error_Message](#debug_message--error_message)
+   - [debugMessage & errorMessage](#debugMessage--errorMessage)
 
 
 ## TEST_CASE
@@ -44,15 +44,15 @@ VAR_ASSIGNMENT(x, 5);  // Logs: "Variable x: initial value = 1, new value = 5"
 ```
 In this example if the `DEBUG_MODE` is disable `VAR_ASSIGNMENT(x, 5)` is replaced by `x = 5` durring compilation.
 
-## DEBUG_LOG
+## LOG
 Allows you to output debug messages. The logs are styled based on the type of message (e.g., debug or error). By default, these messages are printed to the console, and they can optionally be saved to files.
 
 ## Hidden Functions
-### Debug_Var_Assign
+### debugVarAssign
 Used internally to handle variable assignment with logging.
 
 ### testCasePP
 Handles assertion logic for testing conditions.
 
-### Debug_Message & Error_Message
-Debug_Message and Error_Message are special Hidden Functions. The definition of those functions can differ during the compilation.
+### debugMessage & errorMessage
+debugMessage and errorMessage are special Hidden Functions. The definition of those functions can differ during the compilation.
