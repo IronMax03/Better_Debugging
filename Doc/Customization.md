@@ -24,9 +24,10 @@ You can customize the color of debug and error messages using the following macr
 
 - **DEBUG_COLOR**: Defines the color for debug messages.
 - **ERROR_COLOR**: Defines the color for error messages.
+- **TEST_CASE_FAILED**: Defines the color for successful test case messages.
 - **RESET_COLOR**: Resets the terminal color to default after a log.
 
-### Available Color Codes (ANSI Escape Sequences):
+### Example of Color Codes (ANSI Escape Sequences):
 - `\033[31m`: Red
 - `\033[32m`: Green
 - `\033[33m`: Yellow

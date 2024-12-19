@@ -72,6 +72,9 @@ We welcome contributions to **Better_Debugging**! Whether you’re fixing bugs, 
 ### Discutions
 If you  have any idea that could fit in this project We are also open to discussions. But remenber that the main purpose of this project is too simplify programmers work whith minimal to no impact when `DEBUG_MOD` is disable.
 
+### Bugg Report
+To report buggs simply creat an issue inside github using the **Bugg report** template.
+
 ### Guidelines
 
 - **Coding Standards:**
