@@ -1,6 +1,6 @@
 # Customization Guide
 
-This document provides instructions for customizing the **Better_Debugging** library to suit your development needs, including changing log colors, saving logs, and toggling debugging features.
+This document provides instructions for customizing the **Better_Debugging** library to suit your development needs, including changing log colors, saving logs, and toggling debugging features. **All customization must be done before** `#include "Better_Debugging.cpp"`.
 
 # Table of Contents
 
@@ -8,8 +8,8 @@ This document provides instructions for customizing the **Better_Debugging** lib
    - [Available Color Codes (ANSI Escape Sequences)](#available-color-codes-ansi-escape-sequences)
    - [Example](#example)
 2. [Saving Logs](#saving-logs)
-   - [Modes](#modes)
-   - [Enabling Save Modes](#enabling-save-modes)
+   - [DONT_SAVE_LOGS](#dont_save_logs)
+   - [CREATE_NEW_LOGS_FILE](#create_new_logs_file)
 3. [Disabling Debugging Features](#disabling-debugging-features)
    - [Example](#example-1)
 4. [Adding Custom Behaviors](#adding-custom-behaviors)
@@ -41,5 +41,24 @@ You can customize the color of debug and error messages using the following macr
 #define DEBUG_COLOR "\033[32m"  // Green
 #define ERROR_COLOR "\033[31m"  // Red
 #define RESET_COLOR "\033[0m"   // Default
+```
 
 ## Saving Logs
+
+By default all debug messages are saved inside **logs.txt** (assuming `DEBUG_MODE` is activated). Better Debugging offer to options for saving logs: `DONT_SAVE_LOGS` and `CREATE_NEW_LOGS_FILE`. Both options can't be used together.
+
+### DONT_SAVE_LOGS
+`DONT_SAVE_LOGS` avoid logs been saved in a text file.
+#### Example
+```c++
+#define DONT_SAVE_LOGS
+#include "Better_Debugging.cpp"
+```
+
+### CREATE_NEW_LOGS_FILE
+When `CREATE_NEW_LOGS_FILE` is activated a new **.txt** file is created for each run of the program. 
+#### Example
+```c++
+#define CREATE_NEW_LOGS_FILE
+#include "Better_Debugging.cpp"
+```
