@@ -1,5 +1,7 @@
 # Better_Debugging
-[![License](https://img.shields.io/github/license/Qiskit/qiskit.svg?)](https://opensource.org/licenses/Apache-2.0)<br>
+[![License](https://img.shields.io/github/license/Qiskit/qiskit.svg?)](https://opensource.org/licenses/Apache-2.0)
+</a>
+<img src="https://img.shields.io/badge/contributions-welcome-orange"><br>
 Have you ever had a test case fail and struggled to understand the issue? Better_Debugging is here to make debugging easier.
 
 **Better_Debugging** is a C++ library designed to simplify debugging by providing tools to log, assert, and monitor variable changes seamlessly. It allows you to maintain cleaner and more informative debugging code without impacting production code. Note that this library is not a debugger—it’s a tool to enhance your debugging experience.
